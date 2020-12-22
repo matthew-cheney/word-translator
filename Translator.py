@@ -10,10 +10,16 @@ def _LookupInDictionary(lemma: str,
 
 
 def Translate(words: str, language_code: SupportedLanguage) -> [(str, DictionaryEntry)]:
+    """
+    Translate both whole words string and tokenized string. Returns empty list if no translation found.
+    :param words: 1 or more words
+    :param language_code: language the word string is in
+    :return: list of words and phrase with translations
+    """
     res = []
+    wholePhrase = _LookupInDictionary(words, language_code)
+    if wholePhrase is not None:
+        res.append(wholePhrase)
     for text, lem in Lemmatizer.lemmatize(words, language_code):
         res.append((text, _LookupInDictionary(lem, language_code)))
-    # TEMPORARY FIX - ONLY SUPPORTS SINGLE WORDS
-    if len(res) == 0:
-        return [_LookupInDictionary(words, language_code)]
     return res

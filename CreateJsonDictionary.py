@@ -50,4 +50,4 @@ for line in lines:
 import json
 
 with open(f'JsonDictionaries/{language_code}-en-dictionary.json', 'w') as f:
-    json.dump(dictionary, f)
+    json.dump(dictionary, f, ensure_ascii=False)

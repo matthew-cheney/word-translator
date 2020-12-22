@@ -4,6 +4,5 @@ __pycache__
 notes.txt
 venv
 JsonDictionaries/
-en-es-wiktionary-small.txt
-en-es-wiktionary.txt
-
+RawDictionaries/
+config.py
