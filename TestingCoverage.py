@@ -23,6 +23,7 @@ for word in tqdm.tqdm(set(s.split(' '))):
         continue
     res = r.get(f'http://localhost:8000/translate/{language_code}/{word}')
     resBody = json.loads(res.text)
+    print(resBody)
     if len(resBody) == 0:
         failed.add(word)
     else:

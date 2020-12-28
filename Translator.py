@@ -33,6 +33,7 @@ def Translate(words: str, language_code: SupportedLanguage) -> dict:
             dbRes = _LookupInDictionary(lem, language_code)
             if dbRes is not None:
                 meanings.add(dbRes)
-        res[text] = meanings
+        if len(meanings) > 0:
+            res[text] = meanings
 
     return res
