@@ -8,6 +8,6 @@ async def root():
     return {"message": "Hello, World!"}
 
 
-@app.get('/translate/{language_code}/{words}')
-async def translate(language_code: SupportedLanguage, words: str):
-    return Translator.Translate(words, language_code)
+@app.get('/translate/{language_code}/{word}')
+async def translate(language_code: SupportedLanguage, word: str):
+    return Translator.Translate(word, language_code)

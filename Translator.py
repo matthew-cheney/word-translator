@@ -9,17 +9,21 @@ def _LookupInDictionary(lemma: str,
     return DictionaryDAO.getDictionaryEntry(lemma, language_code)
 
 
-def Translate(words: str, language_code: SupportedLanguage) -> [(str, DictionaryEntry)]:
+def Translate(word: str, language_code: SupportedLanguage) -> [(str, DictionaryEntry)]:
     """
-    Translate both whole words string and tokenized string. Returns empty list if no translation found.
-    :param words: 1 or more words
+    Translate single word. Returns empty list if no translation found.
+    :param word: 1 words
     :param language_code: language the word string is in
     :return: list of words and phrase with translations
     """
     res = []
-    wholePhrase = _LookupInDictionary(words, language_code)
-    if wholePhrase is not None:
-        res.append(wholePhrase)
-    for text, lem in Lemmatizer.lemmatize(words, language_code):
-        res.append((text, _LookupInDictionary(lem, language_code)))
+    variants = [word, word.lower()]
+    for text, lem in Lemmatizer.lemmatize(word, language_code):
+        variants.append(lem)
+    for text, lem in Lemmatizer.lemmatize(word.lower(), language_code):
+        variants.append(lem)
+    for lem in variants:
+        dbRes = _LookupInDictionary(lem, language_code)
+        if dbRes is not None:
+            res.append((word, dbRes))
     return res

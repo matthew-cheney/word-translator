@@ -2,6 +2,7 @@ import stanfordnlp as stanfordnlp
 
 from domain.SupportedLanguage import SupportedLanguage
 
+lemmatizers = {k: stanfordnlp.Pipeline(lang=k, processors='tokenize,lemma') for k in SupportedLanguage}
 
 def lemmatize(words: str, language_code: SupportedLanguage) -> [(str, str)]:
     """
@@ -10,7 +11,7 @@ def lemmatize(words: str, language_code: SupportedLanguage) -> [(str, str)]:
     :param language_code: language the words string is in
     :return: list of tokens and lemmas
     """
-    nlp = stanfordnlp.Pipeline(lang=language_code, processors='tokenize,lemma')
+    nlp = lemmatizers[language_code]
     res = []
     try:
         doc = nlp(words)

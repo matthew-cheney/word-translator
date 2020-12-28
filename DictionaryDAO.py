@@ -10,7 +10,6 @@ from pymongo import MongoClient
 
 
 def _readFromDatabase(key: str, client: MongoClient) -> dict:
-    print('reading:', key)
     return client[config['db_name']].translations.find_one({'_id': key})
 
 

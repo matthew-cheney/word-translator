@@ -6,3 +6,4 @@ venv
 JsonDictionaries/
 RawDictionaries/
 config.py
+testFile*.txt
