@@ -10,11 +10,12 @@ from pymongo import MongoClient
 
 
 def _readFromDatabase(key: str, client: MongoClient) -> dict:
-    return client[config['db_name']].db.translations.find_one({'_id': key})
+    print('reading:', key)
+    return client[config['db_name']].translations.find_one({'_id': key})
 
 
 def _writeToDatabase(key: str, value: str, client: MongoClient):
-    client[config['db_name']].db.translations.insert_one({'_id': key, 'meanings': value})
+    client[config['db_name']].translations.insert_one({'_id': key, 'meanings': value})
 
 
 def getDictionaryEntry(lemma: str, language_code: SupportedLanguage) -> DictionaryEntry:
@@ -22,8 +23,13 @@ def getDictionaryEntry(lemma: str, language_code: SupportedLanguage) -> Dictiona
     #     dictionary = json.load(f)
     client = MongoClient()
     res = DictionaryEntry(lemma, [])
-    for ea in _readFromDatabase(generateKey(lemma, language_code), client):
+    dbRes = _readFromDatabase(generateKey(lemma, language_code), client)
+    if dbRes is None:
+        return None
+    for ea in json.loads(dbRes['meanings']):
         res.meanings.append(DictionaryMeaning(ea['lemma'], ea['pos'], ea['meaning']))
     return res
 
-_writeToDatabase('es_hablar', json.dumps([DictionaryMeaning('talk', '{v}', 'to speak').__dict__]), MongoClient())
+# from pprint import pprint
+# q = input('Spanish word: ')
+# pprint(getDictionaryEntry(q, SupportedLanguage.es))

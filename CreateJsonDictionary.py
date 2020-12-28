@@ -1,5 +1,7 @@
 import re
 
+CUSTOM_DELIM = 'Ɖ'
+
 filename = input("File name (.txt): ")
 language_code = input("Language code (es): ")
 
@@ -18,22 +20,22 @@ for line in lines:
     pos = ''
     mean = ''
     i = 0
-    while line[i] not in '({/:':
+    while line[i] not in '({/' + CUSTOM_DELIM:
         eng += line[i]
         i += 1
-    while line[i] not in '({:':
+    while line[i] not in '({' + CUSTOM_DELIM:
         i += 1
     if line[i] == '{':
-        while line[i] not in '(/:':
+        while line[i] not in '(/' + CUSTOM_DELIM:
             pos += line[i]
             i += 1
-    while line[i] not in '({:':
+    while line[i] not in '({' + CUSTOM_DELIM:
         i += 1
     if line[i] == '(':
-        while line[i] not in '/:':
+        while line[i] not in '/' + CUSTOM_DELIM:
             mean += line[i]
             i += 1
-    while line[i] == ':':
+    while line[i] == CUSTOM_DELIM:
         i += 1
 
     heads = [ea.strip() for ea in re.findall(r'(?:,|^) ([^/{]*)', line[i:])]
