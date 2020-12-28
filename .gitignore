@@ -3,7 +3,5 @@ __pycache__
 *.dsl.dz
 notes.txt
 venv
-JsonDictionaries/
-RawDictionaries/
 config.py
 testFile*.txt
