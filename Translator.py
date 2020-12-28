@@ -17,13 +17,13 @@ def Translate(word: str, language_code: SupportedLanguage) -> [(str, DictionaryE
     :return: list of words and phrase with translations
     """
     res = []
-    variants = [word, word.lower()]
+    variants = {word, word.lower()}
     for text, lem in Lemmatizer.lemmatize(word, language_code):
-        variants.append(lem)
+        variants.add(lem)
     for text, lem in Lemmatizer.lemmatize(word.lower(), language_code):
-        variants.append(lem)
+        variants.add(lem)
     for lem in variants:
         dbRes = _LookupInDictionary(lem, language_code)
         if dbRes is not None:
-            res.append((word, dbRes))
+            res.append({word: dbRes})
     return res
