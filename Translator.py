@@ -9,17 +9,17 @@ def _LookupInDictionary(lemma: str,
     return DictionaryDAO.getDictionaryEntry(lemma, language_code)
 
 
-def Translate(word: str, language_code: SupportedLanguage) -> dict:
+def Translate(words: str, language_code: SupportedLanguage) -> dict:
     """
     Translate single word. Returns empty list if no translation found.
-    :param word: 1 words
+    :param words: 1 or more space separated words
     :param language_code: language the word string is in
     :return: list of words and phrase with translations
     """
     res = dict()
     variants = dict()
     # variants[word] = [word, word.lower()]
-    for w in word.split(' '):
+    for w in words.split(' '):
         variants[w] = [w, w.lower()]
 
     for text in variants.keys():
