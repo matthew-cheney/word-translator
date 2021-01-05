@@ -8,6 +8,7 @@ app = FastAPI(
 )
 
 origins = [
+    "*",
     "http://localhost",
 ]
 
