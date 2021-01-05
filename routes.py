@@ -11,3 +11,7 @@ async def root():
 @app.get('/translate/{language_code}/{words}')
 async def translate(language_code: SupportedLanguage, words: str):
     return Translator.Translate(words, language_code)
+
+#
+# @app.post('/add-translation')
+# async def add_translation()
